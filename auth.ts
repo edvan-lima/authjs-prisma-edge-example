@@ -21,7 +21,6 @@ export const {
 } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
-    GitHub,
     Credentials({
       credentials: { password: { label: "Password", type: "password" } },
       async authorize(credentials) {
