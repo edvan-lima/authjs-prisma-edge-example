@@ -1,5 +1,4 @@
 import NextAuth from "next-auth"
-import GitHub from "next-auth/providers/github"
 import Credentials from "next-auth/providers/credentials"
 import { PrismaClient } from "@prisma/client"
 import { PrismaAdapter } from "@auth/prisma-adapter"
@@ -35,11 +34,6 @@ export const {
     }),
   ],
   callbacks: {
-    // authorized({ request, auth }) {
-    //   const { pathname } = request.nextUrl
-    //   if (pathname === "/middleware-example") return !!auth
-    //   return true
-    // },
     jwt({ token, trigger, session }) {
       if (trigger === "update") token.name = session?.user?.name
       return token
