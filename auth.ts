@@ -1,15 +1,8 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import { PrismaClient } from "@prisma/client"
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import { PrismaNeon } from "@prisma/adapter-neon"
-import { Pool } from "@neondatabase/serverless"
+import { db } from "./lib/prisma"
 
-const neon = new Pool({
-  connectionString: process.env.AUTH_POSTGRES_PRISMA_URL,
-})
-const adapter = new PrismaNeon(neon)
-const prisma = new PrismaClient({ adapter })
 
 export const {
   handlers,
@@ -18,7 +11,7 @@ export const {
   signOut,
   unstable_update: update,
 } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(db),
   providers: [
     Credentials({
       credentials: { password: { label: "Password", type: "password" } },
